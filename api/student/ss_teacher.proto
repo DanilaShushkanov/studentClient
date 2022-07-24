@@ -1,0 +1,60 @@
+syntax = "proto3";
+
+option go_package = "github.com/danilashushkanov/studentClient/pkg/studentServiceApi;student";
+
+package student;
+
+import "google/api/annotations.proto";
+
+service TeacherService{
+  rpc CreateTeacher(CreateTeacherRequest) returns (Teacher) {
+    option (google.api.http) = {
+      post: "/student-service/teacher"
+      body: "*"
+    };
+  };
+  rpc PatchTeacher(UpdateTeacherRequest) returns (Teacher) {
+    option (google.api.http) = {
+      put: "/student-service/teacher/{id}"
+      body: "*"
+    };
+  };
+  rpc ListTeachers(ListTeacherRequest) returns (ListTeacherResponse) {
+    option (google.api.http) = {
+      get: "/student-service/teacher"
+    };
+  };
+}
+
+message CreateTeacherRequest {
+  PositionType position_type = 1;
+  string full_name = 2;
+  int64 student_id = 3;
+}
+
+message Teacher {
+  int64 id = 1;
+  PositionType position_type = 2;
+  string full_name = 3;
+  int64 student_id = 4;
+}
+
+message UpdateTeacherRequest {
+  int64 id = 1;
+  PositionType position_type = 2;
+  string full_name = 3;
+}
+
+message ListTeacherRequest {
+  repeated int64 teacher_ids = 1;
+}
+
+message ListTeacherResponse {
+  repeated Teacher teachers = 1;
+}
+
+enum PositionType {
+  POSTGRADUATE = 0;
+  ASSISTANT = 1;
+  DEAN = 2;
+}
