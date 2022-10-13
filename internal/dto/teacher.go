@@ -6,10 +6,10 @@ type Teachers struct {
 }
 
 type TeacherItem struct {
-	ID           int64
+	ID           string
 	PositionType PositionType
 	FullName     string
-	StudentID    int64
+	StudentID    string
 }
 
 type PositionType string

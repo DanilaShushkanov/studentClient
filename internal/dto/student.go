@@ -6,7 +6,7 @@ type Students struct {
 }
 
 type StudentItem struct {
-	ID       int64
+	ID       string
 	FullName string
 	Age      int64
 	Salary   int64
@@ -19,6 +19,6 @@ type ListStudentAndTeachersResponse struct {
 }
 
 type ListStudentAndTeachersRequest struct {
-	StudentIds []int64
-	TeacherIds []int64
+	StudentIds []string
+	TeacherIds []string
 }

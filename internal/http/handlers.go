@@ -6,7 +6,6 @@ import (
 	"github.com/danilashushkanov/studentClient/internal/dto"
 	"github.com/labstack/echo/v4"
 	"net/http"
-	"strconv"
 )
 
 func (s *Server) createStudentHandler(c echo.Context) error {
@@ -25,9 +24,8 @@ func (s *Server) createStudentHandler(c echo.Context) error {
 }
 
 func (s *Server) getStudentHandler(c echo.Context) error {
-	id, _ := strconv.Atoi(c.Param("id"))
 	req := &api.GetStudentRequest{
-		Id: int64(id),
+		Id: c.Param("id"),
 	}
 
 	studentService := bffstudentservice.New(s.client)
@@ -43,8 +41,7 @@ func (s *Server) patchStudentHandler(c echo.Context) error {
 	if err := c.Bind(studentDto); err != nil {
 		return err
 	}
-	id, _ := strconv.Atoi(c.Param("id"))
-	studentDto.ID = int64(id)
+	studentDto.ID = c.Param("id")
 
 	studentService := bffstudentservice.New(s.client)
 	student, err := studentService.UpdateStudent(s.ctx, studentDto)
@@ -56,9 +53,8 @@ func (s *Server) patchStudentHandler(c echo.Context) error {
 }
 
 func (s *Server) deleteStudentHandler(c echo.Context) error {
-	id, _ := strconv.Atoi(c.Param("id"))
 	req := &api.GetStudentRequest{
-		Id: int64(id),
+		Id: c.Param("id"),
 	}
 
 	studentService := bffstudentservice.New(s.client)
@@ -90,8 +86,7 @@ func (s *Server) patchTeacherHandler(c echo.Context) error {
 	if err := c.Bind(teacherDto); err != nil {
 		return err
 	}
-	id, _ := strconv.Atoi(c.Param("id"))
-	teacherDto.ID = int64(id)
+	teacherDto.ID = c.Param("id")
 
 	studentService := bffstudentservice.New(s.client)
 	teacher, err := studentService.UpdateTeacher(s.ctx, teacherDto)
